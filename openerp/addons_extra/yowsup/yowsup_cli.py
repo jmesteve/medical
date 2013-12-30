@@ -208,7 +208,6 @@ parser.add_argument('-c','--config', help="Path to config file containing authen
 parser.add_argument("--ignorecached", help="Don't use cached token if exists", action="store_true", required=False, default=False)
 parser.add_argument('-d','--debug', help='Enable debug messages', action="store_true", required=False, default=False)
 parser.add_argument('-v', '--version', help="Print version info and exit", action='store_true', required=False, default=False)
-#-s 34629387335 'prueba2'
 args = vars(parser.parse_args())
 
 if len(sys.argv) == 1:
