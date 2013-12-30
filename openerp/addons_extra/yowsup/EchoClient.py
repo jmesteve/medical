@@ -21,13 +21,13 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import os
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-os.sys.path.insert(0,parentdir)
+os.sys.path.insert(0, parentdir)
 import time
 
 from connectionmanager import YowsupConnectionManager
 
-class WhatsappEchoClient:
-	
+class WhatsappEchoClient():
+	_name = 'whatsappechoclient'
 	def __init__(self, target, message, waitForReceipt=False):
 		
 		self.jids = []
@@ -43,7 +43,6 @@ class WhatsappEchoClient:
 		connectionManager = YowsupConnectionManager()
 		self.signalsInterface = connectionManager.getSignalsInterface()
 		self.methodsInterface = connectionManager.getMethodsInterface()
-		
 		self.signalsInterface.registerListener("auth_success", self.onAuthSuccess)
 		self.signalsInterface.registerListener("auth_fail", self.onAuthFailed)
 		if waitForReceipt:
@@ -61,36 +60,46 @@ class WhatsappEchoClient:
 			time.sleep(0.5)
 
 	def onAuthSuccess(self, username):
-		print("Authed %s" % username)
-
+		print("Authed: %s" % username)
+		self.onAuthSuccessUsername = username
+		self.onAuthSuccessWait = False
 		if self.waitForReceipt:
 			self.methodsInterface.call("ready")
+			self.onAuthSuccessWait = True
 		
-		
+		self.onAuthSuccessBroadcast = False
 		if len(self.jids) > 1:
 			self.methodsInterface.call("message_broadcast", (self.jids, self.message))
+			self.onAuthSuccessBroadcast = True
 		else:
 			self.methodsInterface.call("message_send", (self.jids[0], self.message))
+			self.onAuthSuccessBroadcast = False
 		print("Sent message")
+		self.onAuthSuccessMessage = 'Sent message'
 		if self.waitForReceipt:
 			timeout = 5
 			t = 0;
 			while t < timeout and not self.gotReceipt:
 				time.sleep(0.5)
-				t+=1
+				t += 1
 
 			if not self.gotReceipt:
 				print("print timedout!")
+				self.onAuthSuccessMessage = 'Timeout'
 			else:
 				print("Got sent receipt")
+				self.onAuthSuccessMessage = 'Got sent receipt'
 
 		self.done = True
+        	
 
 	def onAuthFailed(self, username, err):
 		print("Auth Failed!")
+		self.onAuthSuccessUsername = "Auth Failed!"
 
 	def onDisconnected(self, reason):
-		print("Disconnected because %s" %reason)
+		print("Disconnected because %s" % reason)
+		self.onAuthSuccessUsername = "Disconnected because " + reason
 
 	def onMessageSent(self, jid, messageId):
 		self.gotReceipt = True

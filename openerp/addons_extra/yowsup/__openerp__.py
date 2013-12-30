@@ -31,9 +31,10 @@
     'author': 'jmesteve',
     'website': 'https://github.com/jmesteve',
     'license': 'AGPL-3',
-    "depends": ['base'],
+    "depends": ['base','warning_box'],
     "data": ['security/groups.xml',
              'yowsup_view.xml',
+             'yowsup_partner_send_view.xml'
              ],
     "active": False,
     "installable": True

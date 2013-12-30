@@ -19,10 +19,10 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
-from Common.Http.warequest import WARequest
-from Common.Http.waresponseparser import JSONResponseParser
-from Common.constants import Constants
-from Common.utilities import Utilities
+from ...Common.Http.warequest import WARequest
+from ...Common.Http.waresponseparser import JSONResponseParser
+from ...Common.constants import Constants
+from ...Common.utilities import Utilities
 import os
 class WACodeRequest(WARequest):
 

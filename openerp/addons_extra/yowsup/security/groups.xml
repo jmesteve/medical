@@ -2,7 +2,7 @@
 <openerp>
     <data>
        
-        <record id="group_whatsapp_user" model="res.groups">
+        <record id="base.group_whatsapp_user" model="res.groups">
             <field name="name">Whatsapp / User</field>
         </record>
 

@@ -21,13 +21,5 @@
 #
 ##############################################################################
 
-#import Auth
-#import Common
-#import ConnectionIO
-#import Contacts
-#import Interfaces
-#import Media
-#import Registration
-
 import yowsup
-#import yowsup_cli
+import yowsup_partner_send
